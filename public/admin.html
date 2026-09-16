@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Zaiqa Kitchen</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="loginView" class="login-wrap" style="display:none;">
+  <div class="card">
+    <h1>Admin sign in</h1>
+    <div class="field"><label for="loginUser">Username</label><input id="loginUser"></div>
+    <div class="field"><label for="loginPass">Password</label><input id="loginPass" type="password"></div>
+    <button class="btn-primary" id="loginBtn" style="width:100%;">Sign in</button>
+    <p class="error-text" id="loginError" style="display:none;"></p>
+    <p class="hint">Default demo login: admin / admin123 (set by seed.js — change it before using this for real).</p>
+  </div>
+</div>
+
+<div id="dashboardView" style="display:none;">
+  <div class="topbar">
+    <div class="brand"><span class="eyebrow">Admin</span> Zaiqa Kitchen</div>
+    <button class="btn-secondary" id="logoutBtn" style="background:transparent;color:var(--paper-light);border-color:var(--paper-light);">Log out</button>
+  </div>
+
+  <div class="admin-wrap">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="orders">Orders</button>
+      <button class="tab-btn" data-tab="menu">Menu</button>
+    </div>
+
+    <div id="ordersTab">
+      <div id="ordersList"><p class="empty-note">Loading orders…</p></div>
+    </div>
+
+    <div id="menuTab" style="display:none;">
+      <div class="card">
+        <div class="menu-admin-row" style="font-weight:600; border-bottom: 2px solid var(--charcoal);">
+          <div>Name</div><div>Description</div><div>Price</div><div>Category</div><div>Image URL</div><div>Live</div><div></div>
+        </div>
+        <div id="menuRows"></div>
+      </div>
+      <button class="btn-primary" id="addItemBtn">+ Add menu item</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zaiqa Kitchen — Order Online</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="eyebrow">EST. 2026</span> Zaiqa Kitchen</div>
+  <div style="display: flex; align-items: center;">
+    <a href="track.html" style="color: var(--paper-light); font-size: 0.82rem; text-decoration: underline; margin-right: 14px;">Track order</a>
+    <button class="cart-btn" id="openCartBtn">
+      Ticket <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Order ahead &middot; Skip the line</div>
+    <h1>Fresh off the tawa,<br>straight to your table.</h1>
+    <p>Pick your favorites below, and we'll have your ticket ready when you arrive.</p>
+  </div>
+</div>
+
+<div class="menu-wrap">
+  <div class="category-nav" id="categoryNav"></div>
+  <div id="menuContainer"><p class="empty-note">Loading menu…</p></div>
+</div>
+
+<div class="ticket-overlay" id="overlay"></div>
+<div class="ticket-drawer" id="ticketDrawer">
+  <button class="close-drawer" id="closeDrawerBtn">&times;</button>
+  <div class="ticket-header">
+    <div class="eyebrow">Order Ticket</div>
+    <h2 id="ticketHeading">Your order</h2>
+  </div>
+  <div class="ticket-body" id="ticketBody">
+    <p class="empty-note">Nothing on the ticket yet — add something from the menu.</p>
+  </div>
+  <div class="ticket-footer" id="ticketFooter" style="display:none;">
+    <div class="ticket-total"><span>Total</span><span id="ticketTotal">Rs. 0</span></div>
+    <div class="field"><label for="custName">Name</label><input id="custName" placeholder="Your name"></div>
+    <div class="field"><label for="custPhone">Phone</label><input id="custPhone" placeholder="03xx-xxxxxxx"></div>
+    <div class="field"><label for="custAddress">Delivery address</label><input id="custAddress" placeholder="House #, street, area"></div>
+    <div class="field"><label for="custNote">Note (optional)</label><textarea id="custNote" rows="2" placeholder="Less spicy, no onions, etc."></textarea></div>
+    <button class="place-order-btn" id="placeOrderBtn">Place order</button>
+    <p class="error-text" id="orderError" style="display:none;"></p>
+  </div>
+</div>
+
+<script src="js/customer.js"></script>
+</body>
+</html>

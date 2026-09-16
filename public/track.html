@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Your Order — Zaiqa Kitchen</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="eyebrow">EST. 2026</span> Zaiqa Kitchen</div>
+</div>
+
+<div class="menu-wrap" style="max-width: 480px;">
+  <div class="card" style="margin-top: 32px;">
+    <h1 style="font-family: var(--font-display); font-size: 1.3rem; margin-top: 0;">Track your order</h1>
+    <p style="font-size: 0.85rem; color: #6b6153; margin-top: -8px;">Enter your ticket number and the phone number you ordered with.</p>
+
+    <div class="field"><label for="trackTicket">Ticket number</label><input id="trackTicket" placeholder="T-1234"></div>
+    <div class="field"><label for="trackPhone">Phone</label><input id="trackPhone" placeholder="03xx-xxxxxxx"></div>
+    <button class="btn-primary" id="trackBtn" style="width:100%;">Check status</button>
+    <p class="error-text" id="trackError" style="display:none;"></p>
+  </div>
+
+  <div id="trackResult"></div>
+</div>
+
+<script src="js/track.js"></script>
+</body>
+</html>
