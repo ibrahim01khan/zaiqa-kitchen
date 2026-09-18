@@ -1,5 +1,9 @@
 {
   "name": "resto-order",
   "version": "1.0.0",
-  "main": "server.js"
+  "main": "server.js",
+  "dependencies": {
+    "dotenv": "^18.0.0",
+    "nodemailer": "^10.0.10"
+  }
 }

@@ -1,6 +1,7 @@
 // server.js — the whole backend. Deliberately built on Node's built-in
 // `http` module only, so there is nothing to `npm install`: just run
 // `node server.js`.
+require('dotenv').config();
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -9,6 +10,7 @@ const url = require('url');
 
 const db = require('./db');
 const { verifyPassword } = require('./auth-utils');
+const { sendNewOrderEmail } = require('./mailer');
 
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, 'public');
@@ -182,10 +184,13 @@ function handleDeleteMenuItem(req, res, id) {
 
 async function handleCreateOrder(req, res) {
   const body = await readBody(req);
-  const { customer_name, customer_phone, address, note, items } = body;
+  const { customer_name, customer_phone, address, note, items, payment_method } = body;
   if (!customer_name || !customer_phone || !address || !Array.isArray(items) || items.length === 0) {
     return sendJson(res, 400, { error: 'Name, phone, address, and at least one item are required.' });
   }
+
+  const allowedPayments = ['cod', 'jazzcash', 'easypaisa'];
+  const paymentMethod = allowedPayments.includes(payment_method) ? payment_method : 'cod';
 
   const data = db.load();
   let total = 0;
@@ -208,6 +213,7 @@ async function handleCreateOrder(req, res) {
     customer_phone,
     address,
     note: note || '',
+    payment_method: paymentMethod,
     status: 'new',
     total,
     created_at: new Date().toISOString(),
@@ -216,6 +222,9 @@ async function handleCreateOrder(req, res) {
   data.orders.push(order);
   db.save(data);
   sendJson(res, 201, { ok: true, order_id: order.id, ticket_no: order.ticket_no, total: order.total });
+
+  // Fire the email after responding, so a slow/failed email never delays the order confirmation.
+  sendNewOrderEmail(order);
 }
 
 function handleGetOrders(req, res) {

@@ -47,6 +47,22 @@
     <div class="field"><label for="custPhone">Phone</label><input id="custPhone" placeholder="03xx-xxxxxxx"></div>
     <div class="field"><label for="custAddress">Delivery address</label><input id="custAddress" placeholder="House #, street, area"></div>
     <div class="field"><label for="custNote">Note (optional)</label><textarea id="custNote" rows="2" placeholder="Less spicy, no onions, etc."></textarea></div>
+
+    <div class="field">
+      <label>Payment method</label>
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+        <label style="display:flex; align-items:center; gap:8px; font-size:0.88rem; font-weight:400; text-transform:none; letter-spacing:normal;">
+          <input type="radio" name="paymentMethod" value="cod" checked> Cash on Delivery
+        </label>
+        <label style="display:flex; align-items:center; gap:8px; font-size:0.88rem; font-weight:400; text-transform:none; letter-spacing:normal; opacity:0.5;">
+          <input type="radio" name="paymentMethod" value="jazzcash" disabled> JazzCash <span style="font-size:0.72rem;">(coming soon)</span>
+        </label>
+        <label style="display:flex; align-items:center; gap:8px; font-size:0.88rem; font-weight:400; text-transform:none; letter-spacing:normal; opacity:0.5;">
+          <input type="radio" name="paymentMethod" value="easypaisa" disabled> Easypaisa <span style="font-size:0.72rem;">(coming soon)</span>
+        </label>
+      </div>
+    </div>
+
     <button class="place-order-btn" id="placeOrderBtn">Place order</button>
     <p class="error-text" id="orderError" style="display:none;"></p>
   </div>

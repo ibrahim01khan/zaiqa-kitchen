@@ -90,7 +90,7 @@ function renderOrderCard(order) {
     <div class="card order-card">
       <div style="flex:1;">
         <div class="order-ticket-no">${order.ticket_no} &middot; ${fmt(order.total)}</div>
-        <div class="order-meta">${order.customer_name} — ${order.customer_phone} &middot; ${order.address || ''}${order.note ? ` &middot; "${order.note}"` : ''} &middot; ${order.created_at}</div>
+        <div class="order-meta">${order.customer_name} — ${order.customer_phone} &middot; ${order.address || ''} &middot; ${(order.payment_method || 'cod').toUpperCase()}${order.note ? ` &middot; "${order.note}"` : ''} &middot; ${order.created_at}</div>
         <div class="order-items">${itemsHtml}</div>
         <span class="status-badge status-${order.status}">${order.status}</span>
       </div>

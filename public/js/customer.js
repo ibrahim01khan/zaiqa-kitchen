@@ -160,6 +160,8 @@ async function placeOrder() {
   const phone = document.getElementById('custPhone').value.trim();
   const address = document.getElementById('custAddress').value.trim();
   const note = document.getElementById('custNote').value.trim();
+  const paymentMethodEl = document.querySelector('input[name="paymentMethod"]:checked');
+  const paymentMethod = paymentMethodEl ? paymentMethodEl.value : 'cod';
   const errEl = document.getElementById('orderError');
   errEl.style.display = 'none';
 
@@ -183,7 +185,7 @@ async function placeOrder() {
     const res = await fetch('/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ customer_name: name, customer_phone: phone, address, note, items }),
+      body: JSON.stringify({ customer_name: name, customer_phone: phone, address, note, payment_method: paymentMethod, items }),
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Something went wrong.');
@@ -192,7 +194,7 @@ async function placeOrder() {
       <div class="confirm-screen">
         <div class="stamp">Order Placed</div>
         <div class="ticket-no">${data.ticket_no}</div>
-        <p>Show this ticket number when you pick up, or keep it for delivery tracking. Total: ${fmt(data.total)}.</p>
+        <p>Show this ticket number when you pick up, or keep it for delivery tracking. Total: ${fmt(data.total)}. Payment: Cash on Delivery.</p>
       </div>`;
     document.getElementById('ticketFooter').style.display = 'none';
     CART = {};
