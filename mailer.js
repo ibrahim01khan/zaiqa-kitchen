@@ -1,21 +1,13 @@
 // mailer.js — sends an email notification when a new order comes in.
+// Uses Resend (HTTP-based email API) instead of Gmail SMTP, because
+// SMTP connections are often blocked on cloud hosts like Railway.
 require('dotenv').config();
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  family: 4,
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-  connectionTimeout: 10000,
-});
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 async function sendNewOrderEmail(order) {
-  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+  if (!resend || !process.env.NOTIFY_EMAIL) {
     console.log('Email not configured — skipping order notification email.');
     return;
   }
@@ -24,8 +16,7 @@ async function sendNewOrderEmail(order) {
     .map((it) => `${it.qty} x ${it.name} - Rs. ${it.price * it.qty}`)
     .join('\n');
 
-  const message = `
-New order received!
+  const message = `New order received!
 
 Ticket: ${order.ticket_no}
 Customer: ${order.customer_name}
@@ -41,9 +32,9 @@ Total: Rs. ${order.total}
 `;
 
   try {
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: process.env.GMAIL_USER,
+    await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: process.env.NOTIFY_EMAIL,
       subject: `New Order: ${order.ticket_no} - Rs. ${order.total}`,
       text: message,
     });
