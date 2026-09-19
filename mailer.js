@@ -3,15 +3,17 @@ require('dotenv').config();
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASSWORD,
   },
+  connectionTimeout: 10000,
 });
 
 async function sendNewOrderEmail(order) {
-  // If email isn't configured, skip silently rather than crashing the order flow.
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
     console.log('Email not configured — skipping order notification email.');
     return;
@@ -40,7 +42,7 @@ Total: Rs. ${order.total}
   try {
     await transporter.sendMail({
       from: process.env.GMAIL_USER,
-      to: process.env.GMAIL_USER, // sending the alert to yourself/the restaurant
+      to: process.env.GMAIL_USER,
       subject: `New Order: ${order.ticket_no} - Rs. ${order.total}`,
       text: message,
     });
